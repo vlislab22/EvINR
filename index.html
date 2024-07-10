@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>MAGIC</title>
+    <title>Any2Seg</title>
     <meta name="author" content="Xu Zheng">
     <meta name="description" content="Project page of MAGIC">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -49,11 +49,6 @@
                         AI Thrust, HKUST(GZ)<br /> &nbsp &nbsp
                     </li>
                     <li>
-                        <img src="./images/jiazhou2.png" height="80px"><br>
-                        <a href="https://jiazhou-garland.github.io/">Jiazhou Zhou</a><br />
-                        AI Thrust, HKUST(GZ)<br /> &nbsp &nbsp
-                    </li>
-                    <li>
                         <img src="./images/Addision.png" height="80px"><br>
                         <a href="https://addisonwang2013.github.io/vlislab/linwang.html">Addison Lin Wang</a><br />
                         AI & CMA Thrust, HKUST(GZ)<br /> Dept. of CSE, HKUST
@@ -93,12 +88,14 @@
             <div class="col-md-8 col-md-offset-2">
                 <h3>Abstract</h3>
                 <p class="text-justify">
-                    Fusing an arbitrary number of modalities is vital for achieving robust multi-modal fusion of semantic segmentation yet remains less explored to date. 
-                    Recent endeavors regard RGB modality as the center and the others as the auxiliary, yielding an asymmetric architecture with two branches. 
-                    However, the RGB modality may struggle in certain circumstances, e.g., nighttime, while others, e.g., event data, own their merits; thus, it is imperative for the fusion model to discern robust and fragile modalities, and incorporate the most robust and fragile ones to learn a resilient multi-modal framework. 
-                    To this end, we propose a novel method, named <strong>MAGIC</strong>, that can be flexibly paired with various backbones, ranging from compact to high-performance models. 
-                    Our method comprises two key plug-and-play modules. Firstly, we introduce a multi-modal aggregation module to efficiently process features from multi-modal batches and extract complementary scene information. On top, a unified arbitrary-modal selection module is proposed to utilize the aggregated features as the benchmark to rank the multi-modal features based on the similarity scores. This way, our method can eliminate the dependence on RGB modality and better overcome sensor failures while ensuring the segmentation performance. Under the commonly considered multi-modal setting, our method achieves state-of-the-art performance while reducing the model parameters by <strong>60%</strong>. 
-                    Moreover, our method is superior in the novel modality-agnostic setting, where it outperforms prior arts by a large margin of <strong>+19.41%</strong> mIoU.
+                    Image modality is not perfect as it often fails in certain conditions, \eg, night and fast motion. 
+                  This significantly limits the robustness and versatility of existing multi-modal (\ie, Image+X) semantic segmentation methods when confronting modality absence or failure, as often occurred in real-world applications. 
+                  Inspired by the open-world learning capability of multi-modal vision-language models (MVLMs), we explore a new direction in learning the modality-agnostic representation via knowledge distillation (KD) from MVLMs. 
+                  Intuitively, we propose \textbf{\textit{Any2Seg}}, a novel framework that can achieve robust segmentation from \textbf{\textit{any}} combination of modalities in \textbf{\textit{any}} visual conditions. 
+                  Specifically, we first introduce a novel language-guided semantic correlation distillation (\textbf{LSCD}) module to transfer both inter-modal and intra-modal semantic knowledge in the embedding space from MVLMs, \eg, LanguageBind~\cite{zhu2023languagebind}. 
+                  This enables us to minimize the modality gap and alleviate semantic ambiguity to combine any modalities in any visual conditions. Then, we introduce a modality-agnostic feature fusion (\textbf{MFF}) module that reweights the multi-modal features based on the inter-modal correlation and selects the fine-grained feature. 
+                  This way, our Any2Seg finally yields an optimal modality-agnostic representation. 
+                  Extensive experiments on two benchmarks with four modalities demonstrate that Any2Seg achieves the state-of-the-art under the multi-modal setting (\textbf{+3.54} mIoU) and excels in the challenging modality-incomplete setting(\textbf{+19.79} mIoU).  
                 </p>
             </div>
         </div>
@@ -110,7 +107,7 @@
             <!-- 使用 video 标签嵌入视频 -->
             <video controls>
                 <!-- 替换为您的视频文件路径 -->
-                <source src="./images/8740_vid.mp4" type="video/mp4">
+                <source src="./images/4978_vid.mp4" type="video/mp4">
             </video>
             
             <!-- 视频说明 -->
@@ -122,9 +119,9 @@
             <div class="col-md-8 col-md-offset-2">
                 <h3>Overall framework of our MAGIC</h3>
                 <p class="text-justify">
-                    Overall framework of our MAGIC framework, incorporates plug-and-play multi-modal aggregation and arbitrary-modal selection modules.
+                    Overall framework of our Any2Seg framework.
                 </p>
-                <img src="./images/MAGIC_overall.jpg" class="img-responsive" alt="vis_res" class="center">
+                <img src="./images/Any2Seg_overall.jpg" class="img-responsive" alt="vis_res" class="center">
             </div>
         </div>
       
