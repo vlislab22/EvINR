@@ -1,2 +1,2 @@
-# Any2Seg
-Learning Modality-agnostic Representation for Semantic Segmentation from Any Modalities
+# EvINR
+Project page for Revisit Event Generation Model: Self-Supervised Learning of Event-to-Video Reconstruction with Implicit Neural Representations.
