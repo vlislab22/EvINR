@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Any2Seg</title>
+    <title>EvINR</title>
     <meta name="author" content="Xu Zheng">
-    <meta name="description" content="Project page of MAGIC">
+    <meta name="description" content="Project page of EvINR">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" type="image/png" href="eccv_logo.png">
     
@@ -28,7 +28,7 @@
     <div class="container" id="main">
         <div class="row">
             <h1 class="col-md-12 text-center">
-                Learning Modality-agnostic Representation for Semantic Segmentation from Any Modalities<br /> 
+                Revisit Event Generation Model: Self-Supervised Learning of Event-to-Video Reconstruction with Implicit Neural Representations<br /> 
                 <small>
                     ECCV 2024
                 </small>
@@ -39,13 +39,13 @@
             <div class="col-md-12 text-center">
                 <ul class="list-inline">
                     <li>
-                        <img src="./images/xu1.png" height="80px"><br>
-                        <a href="https://zhengxujosh.github.io/">Xu Zheng</a><br />
+                        <img src="./images/zipeng.jpg" height="80px"><br>
+                        <a href="https://zhengxujosh.github.io/">Zipeng Wang</a><br />
                         AI Thrust, HKUST(GZ)<br /> &nbsp &nbsp
                     </li>
                     <li>
-                        <img src="./images/huiyi1.png" height="80px"><br>
-                        <a href="https://qc-ly.github.io/">Yuanhuiyi Lyu</a><br />
+                        <img src="./images/yunfan.jpeg" height="80px"><br>
+                        <a href="https://qc-ly.github.io/">Yunfan Lu</a><br />
                         AI Thrust, HKUST(GZ)<br /> &nbsp &nbsp
                     </li>
                     <li>
@@ -88,14 +88,15 @@
             <div class="col-md-8 col-md-offset-2">
                 <h3>Abstract</h3>
                 <p class="text-justify">
-                    Image modality is not perfect as it often fails in certain conditions, \eg, night and fast motion. 
-                  This significantly limits the robustness and versatility of existing multi-modal (\ie, Image+X) semantic segmentation methods when confronting modality absence or failure, as often occurred in real-world applications. 
-                  Inspired by the open-world learning capability of multi-modal vision-language models (MVLMs), we explore a new direction in learning the modality-agnostic representation via knowledge distillation (KD) from MVLMs. 
-                  Intuitively, we propose \textbf{\textit{Any2Seg}}, a novel framework that can achieve robust segmentation from \textbf{\textit{any}} combination of modalities in \textbf{\textit{any}} visual conditions. 
-                  Specifically, we first introduce a novel language-guided semantic correlation distillation (\textbf{LSCD}) module to transfer both inter-modal and intra-modal semantic knowledge in the embedding space from MVLMs, \eg, LanguageBind~\cite{zhu2023languagebind}. 
-                  This enables us to minimize the modality gap and alleviate semantic ambiguity to combine any modalities in any visual conditions. Then, we introduce a modality-agnostic feature fusion (\textbf{MFF}) module that reweights the multi-modal features based on the inter-modal correlation and selects the fine-grained feature. 
-                  This way, our Any2Seg finally yields an optimal modality-agnostic representation. 
-                  Extensive experiments on two benchmarks with four modalities demonstrate that Any2Seg achieves the state-of-the-art under the multi-modal setting (\textbf{+3.54} mIoU) and excels in the challenging modality-incomplete setting(\textbf{+19.79} mIoU).  
+                    Reconstructing intensity frames from event data while maintaining high temporal resolution and dynamic range is crucial for bridging the gap between event-based and frame-based computer vision. 
+                    Previous approaches have depended on supervised learning on synthetic data, which lacks interpretability and risk over-fitting to the setting of the event simulator. 
+                    Recently, self-supervised learning (SSL) based methods, which primarily utilize per-frame optical flow to estimate intensity via photometric constancy,  has been actively investigated. However, they are vulnerable to errors in the case of inaccurate optical flow.
+                    This paper proposes a novel SSL event-to-video reconstruction approach, dubbed EvINR, which eliminates the need for labeled data or optical flow estimation.
+                    Our core idea is to reconstruct intensity frames by directly addressing the event generation model, essentially a partial differential equation (PDE) that describes how events are generated based on the time-varying brightness signals.
+                    Specifically, we utilize an implicit neural representation (INR), which takes in spatiotemporal coordinate (x, y, t) and predicts intensity values, to represent the solution of the event generation equation. 
+                    The INR, parameterized as a fully-connected Multi-layer Perceptron (MLP), can be optimized with its temporal derivatives supervised by events.
+                    To make EvINR feasible for online requisites, we propose several acceleration techniques that substantially expedite the training process. 
+                    Comprehensive experiments demonstrate that our EvINR surpasses previous SSL methods by 38% w.r.t. Mean Squared Error (MSE) and is comparable or superior to SoTA supervised methods.  
                 </p>
             </div>
         </div>
@@ -104,21 +105,28 @@
         <!-- ##### 结果 #####-->
         <div class="row">     
             <div class="col-md-8 col-md-offset-2">
-                <h3>Overall framework of our MAGIC</h3>
+                <h3>Overview</h3>
                 <p class="text-justify">
-                    Overall framework of our Any2Seg framework.
+                    A fully connected MLP is used to implicitly solve the event generation equation. The temporal gradient of the MLP is supervised by temporal intensity changes of events, and the spatial gradient is penalized to reduce noise.
                 </p>
-                <img src="./images/Any2Seg_overall.jpg" class="img-responsive" alt="vis_res" class="center">
+                <img src="./images/framework.png" class="img-responsive" alt="vis_res" class="center">
             </div>
         </div>
       
       <div class="row">     
             <div class="col-md-8 col-md-offset-2">
-                <h3>Results</h3>
+                <h3>Quantitative Results</h3>
                 <p class="text-justify">
-                    Quantitative results in MSS setting across dual, triple, and quadruple modalities on DELIVER. R: RGB, D: Depth, E: Event, L: LiDAR.
+                    Comparison of quantitative results on the IJRR, HQF, and AED datasets. Bold values indicate the best results among all methods, while underlined values indicate the best results among SSL methods.
                 </p>
-                <img src="./images/vis_compare.jpg" class="img-responsive" alt="vis_res" class="center">
+                <img src="./images/results_table.png" class="img-responsive" alt="vis_res" class="center">
+            </div>
+            <div class="col-md-8 col-md-offset-2">
+                <h3>Qualitative Results</h3>
+                <p class="text-justify">
+                    Qualitative comparison with baseline methods on IJRR(Row 1&2), HQF (Row 3&4) and AED(Row 5&6).
+                </p>
+                <img src="./images/results_visual.png" class="img-responsive" alt="vis_res" class="center">
             </div>
         </div>
 
@@ -130,9 +138,9 @@
                 <div class="row align-items-center">
                     <div class="col py-3">
                         <pre class="border" style="text-align: left;">
-@article{zheng2024MAGIC,
-  title={Learning Modality-agnostic Representation for Semantic Segmentation from Any Modalities},
-  author={Zheng, Xu and Lyu, Yuanhuiyi and Wang, Lin},
+@article{wang2024EvINR,
+  title={Revisit Event Generation Model: Self-Supervised Learning of Event-to-Video Reconstruction with Implicit Neural Representations},
+  author={Wang, Zipeng and Lu, Yunfan and Wang, Lin},
   journal={ECCV},
   year={2024}
 }
